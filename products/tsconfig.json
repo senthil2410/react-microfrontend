@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "jsx": "react",
+    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "Node",
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["components/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}
