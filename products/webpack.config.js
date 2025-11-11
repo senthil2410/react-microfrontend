@@ -2,6 +2,7 @@ import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
+import route from "../shared"
 
 const require = createRequire(import.meta.url);
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
@@ -23,7 +24,11 @@ export default {
     rules: [
       {
         test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
+
+        include: [
+          path.resolve(__dirname, "src"),
+          path.resolve(__dirname, "../shared"),
+        ],
         use: "babel-loader",
       },
       {
@@ -84,7 +89,9 @@ export default {
 
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
-    alias: {},
+    alias: {
+      "@shared": path.resolve(__dirname, "../shared"),
+    },
   },
 
   devServer: {
