@@ -2,7 +2,6 @@ import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
-
 const require = createRequire(import.meta.url);
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
@@ -15,8 +14,8 @@ export default {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "auto",
     clean: true,
+    publicPath: "auto",
   },
 
   module: {
@@ -56,22 +55,23 @@ export default {
       template: path.resolve(__dirname, "./public/index.html"),
     }),
     new ModuleFederationPlugin({
-      name: "Home",
-      remotes: {
-        Product: "Product@http://localhost:3002/remoteEntry.js",
-        Cart: "Cart@http://localhost:3003/remoteEntry.js",
+      name: "Cart",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./App": "./src/App.tsx",
       },
+
       shared: {
         react: {
           singleton: true,
-          strictVersion: true,
           eager: false,
+          strictVersion: true,
           requiredVersion: "18.2.0",
         },
         "react-dom": {
           singleton: true,
-          strictVersion: true,
           eager: false,
+          strictVersion: true,
           requiredVersion: "18.2.0",
         },
         "react-router-dom": {
@@ -86,16 +86,13 @@ export default {
 
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
-    alias: {
-      "@components": path.resolve(__dirname, "src/components"),
-      "@pages": path.resolve(__dirname, "src/pages"),
-      "@hooks": path.resolve(__dirname, "src/hooks"),
-    },
+    alias: {},
   },
 
   devServer: {
     historyApiFallback: true,
-    port: 3000,
+    port: 3003,
+    hot: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
