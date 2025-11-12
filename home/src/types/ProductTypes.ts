@@ -5,3 +5,9 @@ export interface Product {
   stock: number;
   category: string;
 }
+export interface ProductResponse {
+  message?: string;
+  result: {
+    allProducts: Product[];
+  };
+}

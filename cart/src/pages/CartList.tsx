@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Product } from "../../../shared/types/Products";
+import { useCart } from "Home/hooks/useCart";
+import type { CartItem } from "Home/types/CartTypes";
 
 const CartList = () => {
-  const [cart, setCart] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const handleAddToCart = (event: Event) => {
-      const product = (event as CustomEvent<Product>).detail;
-      console.log("Product added to cart:", product);
-      setCart((prev) => [...prev, product]);
-    };
-
-    window.addEventListener("add-to-cart", handleAddToCart);
-
-    return () => {
-      window.removeEventListener("add-to-cart", handleAddToCart);
-    };
-  }, []);
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
+    useCart();
 
   return (
     <div>
@@ -24,13 +12,34 @@ const CartList = () => {
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
-        <ul>
-          {cart.map((product, index) => (
-            <li key={index}>
-              {product.name} - ${product.price}
-            </li>
-          ))}
-        </ul>
+        <table border={1} cellPadding={5}>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cart.map((item: CartItem) => (
+              <tr key={item._id}>
+                <td>{item.name}</td>
+                <td>{item.price}</td>
+                <td>{item.quantity}</td>
+                <td>{item.price * item.quantity}</td>
+                <td>
+                  <button onClick={() => decreaseQuantity(item._id)}>-</button>
+                  <button onClick={() => increaseQuantity(item._id)}>+</button>
+                  <button onClick={() => removeFromCart(item._id)}>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );

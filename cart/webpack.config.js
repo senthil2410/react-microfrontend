@@ -57,6 +57,10 @@ export default {
     new ModuleFederationPlugin({
       name: "Cart",
       filename: "remoteEntry.js",
+
+      remotes: {
+        Home: "Home@http://localhost:3000/remoteEntry.js",
+      },
       exposes: {
         "./App": "./src/App.tsx",
       },

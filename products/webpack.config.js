@@ -2,7 +2,6 @@ import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
-import route from "../shared"
 
 const require = createRequire(import.meta.url);
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
@@ -60,6 +59,9 @@ export default {
     new ModuleFederationPlugin({
       name: "Product",
       filename: "remoteEntry.js",
+      remotes: {
+        Home: "Home@http://localhost:3000/remoteEntry.js",
+      },
       exposes: {
         "./App": "./src/App.tsx",
       },

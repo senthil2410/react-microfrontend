@@ -13,7 +13,7 @@ export default {
   entry: "./src/index.tsx",
 
   output: {
-    filename: "bundle.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "dist"),
     publicPath: "auto",
     clean: true,
@@ -57,6 +57,12 @@ export default {
     }),
     new ModuleFederationPlugin({
       name: "Home",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./CartContext": "./src/context/cartContext.tsx",
+        "./Notification": "./src/components/Notification/Notification.tsx",
+        "./hooks/useCart": "./src/hooks/useCart.ts",
+      },
       remotes: {
         Product: "Product@http://localhost:3002/remoteEntry.js",
         Cart: "Cart@http://localhost:3003/remoteEntry.js",
