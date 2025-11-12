@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { getErrorMessage } from "../utils/errorHandler";
 import { fetchProducts } from "../services/productService";
-import { ProductResponse } from "../types/products";
-import { Product as ProductType } from "@shared/types/Products";
-import { useCart } from "@shared/context/cartContext";
+import type {
+  ProductResponse,
+  Product as ProductType,
+} from "Home/types/ProductTypes";
+import { useCart } from "Home/hooks/useCart";
 
 const Product = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -23,8 +26,13 @@ const Product = () => {
     };
     getProducts();
   }, []);
-  const { addToCart } = useCart();
+
   const handleAddToCart = (product: ProductType) => {
+    window.dispatchEvent(
+      new CustomEvent<string>("notification", {
+        detail: `${product.name} added to cart!`,
+      })
+    );
     addToCart(product);
   };
   return (

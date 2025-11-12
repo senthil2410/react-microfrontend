@@ -1,7 +1,25 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "target": "ES6",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "Node",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "Home/*": ["../home/src/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "../shared"]
+  "include": [
+    "src",
+    "../home/src/types",
+    "../home/src/context",
+
+  ]
 }

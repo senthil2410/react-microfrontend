@@ -1,6 +1,6 @@
 import { getErrorMessage } from "../utils/errorHandler";
 import axios from "axios";
-import { ProductResponse } from "../types/products";
+import { ProductResponse } from "Home/types/ProductTypes";
 
 export const fetchProducts = async (): Promise<ProductResponse> => {
   try {

@@ -1,18 +1,14 @@
 import React from "react";
+import { CartProvider } from "Home/CartContext";
 import { Routes, Route } from "react-router-dom";
-
 import Product from "./pages/Product";
-import { CartProvider } from "@shared/index";
 
-
-const App = () => {
+export default function App() {
   return (
-     <CartProvider>
-    <Routes>
-      <Route path="/" element={<Product/>} />
-    </Routes>
+    <CartProvider>
+      <Routes>
+        <Route path="/" element={<Product />} />
+      </Routes>
     </CartProvider>
   );
-};
-
-export default App;
+}
