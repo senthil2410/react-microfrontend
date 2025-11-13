@@ -20,6 +20,5 @@
     "src",
     "../home/src/types",
     "../home/src/context",
-
   ]
 }

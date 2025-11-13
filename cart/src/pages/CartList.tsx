@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "Home/hooks/useCart";
 import type { CartItem } from "Home/types/CartTypes";
+import { useAuth } from "Home/hooks/useAuth";
+
 
 const CartList = () => {
+  const {  user } = useAuth();
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } =
     useCart();
 
   return (
     <div>
-      <h1>Cart</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          backgroundColor: "gray",
+        }}
+      >
+        <h1>Cart</h1>
+        <h4>{user ? user.email : "Loading..."}</h4>
+      </div>
+
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
