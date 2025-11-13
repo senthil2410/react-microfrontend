@@ -62,6 +62,9 @@ export default {
         "./CartContext": "./src/context/cartContext.tsx",
         "./Notification": "./src/components/Notification/Notification.tsx",
         "./hooks/useCart": "./src/hooks/useCart.ts",
+        "./hooks/useAuth": "./src/hooks/useAuth.ts",
+        "./AuthContext": "./src/context/AuthContext.tsx",
+        "./utils/errorHandler": "/src/utils/errorHandler.ts",
       },
       remotes: {
         Product: "Product@http://localhost:3002/remoteEntry.js",
