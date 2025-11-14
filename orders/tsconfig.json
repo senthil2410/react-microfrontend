@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "lib": ["DOM", "ESNext"],
+    "moduleResolution": "Node",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "Home/*": ["../home/src/*"]
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": [
+    "src",
+    "../home/src/types",
+    "../home/src/hooks",
+    "../home/src/store"
+  ]
+}
