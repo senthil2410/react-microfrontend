@@ -13,16 +13,17 @@ export default {
   entry: "./src/index.tsx",
 
   output: {
-    filename: "[name].js",
+    filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "auto",
     clean: true,
+    publicPath: "auto",
   },
 
   module: {
     rules: [
       {
         test: /\.[jt]sx?$/,
+
         include: [
           path.resolve(__dirname, "src"),
           path.resolve(__dirname, "../shared"),
@@ -56,49 +57,32 @@ export default {
       template: path.resolve(__dirname, "./public/index.html"),
     }),
     new ModuleFederationPlugin({
-      name: "Home",
+      name: "Product",
       filename: "remoteEntry.js",
-      exposes: {
-        "./CartContext": "./src/context/cartContext.tsx",
-        "./Notification": "./src/components/Notification/Notification.tsx",
-        "./hooks/useCart": "./src/hooks/useCart.ts",
-        "./hooks/useAuth": "./src/hooks/useAuth.ts",
-        "./AuthContext": "./src/context/AuthContext.tsx",
-        "./utils/errorHandler": "/src/utils/errorHandler.ts",
-        "./store/store": "/src/store/store.ts",
-      },
       remotes: {
-        Product: "Product@http://localhost:3002/remoteEntry.js",
-        Cart: "Cart@http://localhost:3003/remoteEntry.js",
+        Home: "Home@http://localhost:3000/remoteEntry.js",
       },
+      exposes: {
+        "./App": "./src/App.tsx",
+        "./slices/orderSlice": "./src/slices/orderSlice.ts",
+      },
+
       shared: {
         react: {
           singleton: true,
-          strictVersion: true,
           eager: false,
+          strictVersion: true,
           requiredVersion: "18.2.0",
         },
         "react-dom": {
           singleton: true,
-          strictVersion: true,
           eager: false,
+          strictVersion: true,
           requiredVersion: "18.2.0",
         },
         "react-router-dom": {
           singleton: true,
           requiredVersion: "7.9.5",
-          eager: false,
-          strictVersion: true,
-        },
-        "@reduxjs/toolkit": {
-          singleton: true,
-          requiredVersion: "2.9.0",
-          eager: false,
-          strictVersion: true,
-        },
-        "react-redux": {
-          singleton: true,
-          requiredVersion: "8.1.3",
           eager: false,
           strictVersion: true,
         },
@@ -108,16 +92,12 @@ export default {
 
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
-    alias: {
-      "@components": path.resolve(__dirname, "src/components"),
-      "@pages": path.resolve(__dirname, "src/pages"),
-      "@hooks": path.resolve(__dirname, "src/hooks"),
-    },
   },
 
   devServer: {
     historyApiFallback: true,
-    port: 3000,
+    port: 3003,
+    hot: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
